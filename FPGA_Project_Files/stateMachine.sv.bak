@@ -1,0 +1,77 @@
+module state_machine
+(
+		input logic 			vsync,
+		input logic [59:0] 	enemy_array,
+		input logic [2:0]		player_lives,
+		input logic [7:0] 	key_pressed,
+		input logic 			reset,
+		
+		output logic [3:0]	state
+);
+
+	always_ff @ (posedge vsync or posedge reset) begin
+	
+		if(reset) begin
+			//state 0 = "press space" state
+			state <= 0;
+		end
+		
+		else begin
+		
+			if((state == 0 || state == 11 || state == 12) && key_pressed == 8'd44)
+				//state 1 = Level 1
+				state <= 1;
+			
+			else if(state == 1 && enemy_array == 60'd0)
+				//state 2 = Level 2
+				state <= 2;
+
+			else if(state == 2 && enemy_array == 60'd0)
+				//state 3 = Level 3
+				state <= 3;
+
+			else if(state == 3 && enemy_array == 60'd0)
+				//state 4 = Level 4
+				state <= 4;
+			
+			else if(state == 4 && enemy_array == 60'd0)
+				//state 5 = Level 5
+				state <= 5;
+			
+			else if(state == 5 && enemy_array == 60'd0)
+				//state 6 = Level 6
+				state <= 6;
+			
+			else if(state == 6 && enemy_array == 60'd0)
+				//state 7 = Level 7
+				state <= 7;
+			
+			else if(state == 7 && enemy_array == 60'd0)
+				//state 8 = Level 8
+				state <= 8;
+			
+			else if(state == 8 && enemy_array == 60'd0)
+				//state 9 = Level 9
+				state <= 9;
+			
+			else if(state == 9 && enemy_array == 60'd0)
+				//state 10 = Level 10
+				state <= 10;
+			
+			else if(state == 10 && enemy_array == 60'd0)
+				//state 11 = you win state
+				state <= 11;
+				
+			else if(state == 10 && player_lives == 3'd0)
+				//state 12 = game over state
+				state <= 12;
+				
+			else
+				//otherwise don't change anything
+				state <= state;
+		
+		end
+	
+	end
+
+endmodule 

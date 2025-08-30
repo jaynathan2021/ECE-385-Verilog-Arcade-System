@@ -1,0 +1,170 @@
+//enemy_status.sv
+//
+// keeps track of what enemies are still alive.
+// records the data in a column-major array.
+
+class waves;
+	rand bit [5:0] wave[9];
+
+	int s;
+	task set(int n);
+    	s = n;
+  	endtask
+	constraint wave_size {wave.sum() == s;}
+endclass
+
+
+module enemy_status
+(
+	input		logic	reset,
+	input		logic [6:0] enemy_hit,
+	input		logic collision,
+	input		logic [3:0] state,
+
+	output	logic [9:0][5:0]	enemy_status
+);
+
+	initial begin
+		waves wave1 = new();
+		wave1.set(4);
+		wave1.randomize();
+
+		waves wave2 = new();
+		wave2.set(8);
+		wave2.randomize();
+		
+		waves wave3 = new();
+		wave3.set(12);
+		wave3.randomize();
+		
+		waves wave4 = new();
+		wave4.set(4);
+		wave4.randomize();
+		
+		waves wave5 = new();
+		wave5.set(6);
+		wave5.randomize();
+		
+		waves wave6 = new();
+		wave6.set(18);
+		wave6.randomize();
+		
+		waves wave7 = new();
+		wave7.set(6);
+		wave7.randomize();
+		
+		waves wave8 = new();
+		wave8.set(9);
+		wave8.randomize();
+		
+		waves wave9 = new();
+		wave9.set(9);
+		wave9.randomize();
+		
+		waves wave10 = new();
+		wave10.set(16);
+		wave10.randomize();
+	end
+
+
+	always_ff @ (posedge reset or posedge collision) 
+	begin
+		
+		if(reset) begin
+			enemy_status <= {
+			6'b111111,
+			6'b111111,
+			6'b111111,
+			6'b111111,
+			6'b111111,
+			6'b111111,
+			6'b111111,
+			6'b111111,
+			6'b111111,
+			6'b111111 
+			};
+		end
+		
+		//whenever there's a collision, kill the enemy
+		else if(state == 1)
+		begin
+			enemy_status = wave1;
+			if(collision) begin
+				wave1[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 2)
+		begin
+			enemy_status = wave2;
+			if(collision) begin
+				wave2[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+		
+		else if(state == 3)
+		begin
+			enemy_status = wave3;
+			if(collision) begin
+				wave3[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 4)
+		begin
+			enemy_status = wave4;
+			if(collision) begin
+				wave4[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 5)
+		begin
+			enemy_status = wave5;
+			if(collision) begin
+				wave5[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 6)
+		begin
+			enemy_status = wave6;
+			if(collision) begin
+				wave6[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 7)
+		begin
+			enemy_status = wave7;
+			if(collision) begin
+				wave7[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 8)
+		begin
+			enemy_status = wave8;
+			if(collision) begin
+				wave8[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 9)
+		begin
+			enemy_status = wave9;
+			if(collision) begin
+				wave9[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+
+		else if(state == 10)
+		begin
+			enemy_status = wave10;
+			if(collision) begin
+				wave10[enemy_hit[6:3]][enemy_hit[2:0]] <= 1'b0;
+			end
+		end
+	end
+
+endmodule 

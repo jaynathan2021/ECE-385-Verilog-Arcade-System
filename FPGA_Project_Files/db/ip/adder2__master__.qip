@@ -1,0 +1,2 @@
+set_global_assignment -name QIP_FILE [file join $::quartus(qip_path) lab62_soc/lab62_soc.qip]
+set_global_assignment -name QIP_FILE [file join $::quartus(qip_path) lab61soc/lab61soc.qip]
